@@ -30,6 +30,7 @@ export default function Dashboard() {
     name: "", 
     url: "", 
     limit: 10,
+    target_jid: "",
     template: `🚀 *Nova fofoca fresquinha!*\n\n*{{titulo}}*\n\n{{resumo}}...\n\n🔗 *Leia mais:* {{link}}\n\n_Enviado via RSS Flow ⚡_`
   });
   const [addingFeed, setAddingFeed] = useState(false);
@@ -119,6 +120,7 @@ export default function Dashboard() {
         url: newFeed.url,
         posts_limit_daily: newFeed.limit,
         message_template: newFeed.template,
+        target_jid: newFeed.target_jid,
         user_id: (await supabase.auth.getUser()).data.user?.id || '00000000-0000-0000-0000-000000000000'
       });
 
@@ -128,6 +130,7 @@ export default function Dashboard() {
           name: "", 
           url: "", 
           limit: 10, 
+          target_jid: "",
           template: `🚀 *Nova fofoca fresquinha!*\n\n*{{titulo}}*\n\n{{resumo}}...\n\n🔗 *Leia mais:* {{link}}\n\n_Enviado via RSS Flow ⚡_` 
         });
         fetchDashboardData();
@@ -151,7 +154,8 @@ export default function Dashboard() {
           name: editingFeed.name,
           url: editingFeed.url,
           posts_limit_daily: editingFeed.posts_limit_daily,
-          message_template: editingFeed.message_template
+          message_template: editingFeed.message_template,
+          target_jid: editingFeed.target_jid
         })
         .eq('id', editingFeed.id);
 
@@ -352,6 +356,18 @@ export default function Dashboard() {
                   />
                 </div>
                 <div>
+                  <label className="block text-[10px] uppercase tracking-widest font-bold text-white/40 mb-2 ml-4">ID de Destino (Grupo ou Canal)</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="ex: 1234567890@g.us ou @newsletter"
+                    className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-[#00e5ff] transition-colors"
+                    value={newFeed.target_jid}
+                    onChange={e => setNewFeed({...newFeed, target_jid: e.target.value})}
+                  />
+                  <p className="text-[9px] text-white/20 mt-1 ml-4 font-medium uppercase tracking-tight">Pegue este ID no painel Manager da Evolution API</p>
+                </div>
+                <div>
                   <div className="flex justify-between items-center mb-2 ml-4">
                     <label className="text-[10px] uppercase tracking-widest font-bold text-white/40">Template da Mensagem</label>
                     <div className="text-[9px] text-white/20 flex gap-2">
@@ -435,6 +451,15 @@ export default function Dashboard() {
                     className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-[#00e5ff] transition-colors"
                     value={editingFeed.url}
                     onChange={e => setEditingFeed({...editingFeed, url: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest font-bold text-white/40 mb-2 ml-4">ID de Destino (Grupo ou Canal)</label>
+                  <input 
+                    required type="text"
+                    className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-[#00e5ff] transition-colors"
+                    value={editingFeed.target_jid}
+                    onChange={e => setEditingFeed({...editingFeed, target_jid: e.target.value})}
                   />
                 </div>
                 <div>

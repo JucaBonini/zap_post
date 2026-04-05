@@ -47,7 +47,7 @@ export async function POST() {
 
           if (!existingPost) {
             // New Post! Send to WhatsApp
-            const { success } = await sendToWhatsApp(feed.id, item, feed.message_template);
+            const { success } = await sendToWhatsApp(feed.id, item, feed.message_template, feed.target_jid);
             
             if (success) {
                // Store as sent
