@@ -51,11 +51,11 @@ export default function WhatsAppPage() {
       setInstances(data || []);
       
       // If we find our brand new instance is now connected, close modal
-      if (connectionStatus === 'scanning' && data?.find(i => i.instance_name === newInstance.name && i.status === 'connected')) {
+      if (connectionStatus === 'scanning' && data?.find((i: any) => i.instance_name === newInstance.name && i.status === 'connected')) {
         setConnectionStatus('connected');
         setTimeout(() => closeModal(), 2000);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Erro ao buscar instâncias:', err);
     } finally {
       setLoading(false);
